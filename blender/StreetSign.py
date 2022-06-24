@@ -91,6 +91,6 @@ def generateSignImages(count, img_path, ann_path, name, scene: Scene):
 def main():
     scene = Scene()
     #generateSignImages(10, os.path.join("out", "imgs"), os.path.join("out", "info"), "test", os.path.join("//Signs", "MUTCD_R1-2.svg.png"), sign, cam, lights)
-    genereateAllSignImages("Signs", 2, os.path.join("//out", "imgs"), os.path.join("out", "info"), scene)
+    genereateAllSignImages("Signs", 200, os.path.join("//out", "imgs"), os.path.join("out", "info"), scene)
 if __name__ == "__main__":
     main()
