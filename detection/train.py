@@ -27,12 +27,12 @@ import torch.utils.data
 import torchvision
 import torchvision.models.detection
 import torchvision.models.detection.mask_rcnn
-import utils
-from coco_utils import get_coco, get_coco_kp
-from engine import train_one_epoch, evaluate
-from group_by_aspect_ratio import GroupedBatchSampler, create_aspect_ratio_groups
+import detection.utils as utils
+from detection.coco_utils import get_coco, get_coco_kp
+from detection.engine import train_one_epoch, evaluate
+from detection.group_by_aspect_ratio import GroupedBatchSampler, create_aspect_ratio_groups
 from torchvision.transforms import InterpolationMode
-from transforms import SimpleCopyPaste
+from detection.transforms import SimpleCopyPaste
 
 
 def get_dataset(name, image_set, transform, data_path):
