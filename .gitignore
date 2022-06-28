@@ -133,3 +133,8 @@ db_lisa_tiny
 backgrounds
 
 blender/out
+*.blend1
+models
+
+Signs_Old
+Signs_Svg
