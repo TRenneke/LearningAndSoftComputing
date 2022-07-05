@@ -1,0 +1,24 @@
+Einleitung
+genutzte Technologien
+genutzte Datensätze
+	echte Datesatz Code (beschreiben, beispielse zeigen, Dataset Klasse)
+	synthetische Daten (kurz beschreiben, beispielse zeigen)
+synthetische Datengenerierung (Vorgehen, Technologien, Prozess)
+	Punkt 1
+	Punkt 2
+	Punkt 3
+Traininspipeline
+	Aufteilung von Training und Testdaten (code)
+	Transformationen (code)
+	erstellung von Dataloader für das training (code)
+	Parametereinstellungen(device, params,optimizer,lr_scheduler, epochen) (code)
+	Trainingschleife (train_one_epoch, evaluate) (code)
+	Trainingsausgaben
+Training
+	genutzte Modelle
+	trainingkonfigurationen (Batchsize,epochen)
+Evaluation
+	ergebnisse des training mit echten daten
+	ergebnisse des trainins mit synthetischen daten
+	Der direkte Vergleich
+Fazit
