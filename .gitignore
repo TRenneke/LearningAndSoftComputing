@@ -133,13 +133,19 @@ db_lisa_tiny
 backgrounds
 
 blender/out
+<<<<<<< HEAD
 blender/textures
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 *.blend1
 models
 
 Signs_Old
 Signs_Svg
+<<<<<<< HEAD
 
 
 backgrounds_coco
 runs
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff

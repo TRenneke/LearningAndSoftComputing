@@ -85,6 +85,7 @@ def getObjects(name):
 def setTrafficSign(file):
     bpy.data.images["TrafficSign"].filepath = file
 lightRanges = [(-5, 5), (-5, 5), (-5, 5)]
+<<<<<<< HEAD
 def squareRandRange(range):
     min = range[0]
     max = range[1]
@@ -112,6 +113,8 @@ def randBackgroundTex(mat, textures):
     #mat.node_tree.nodes["Vector Math.001"].inputs[2].default_value[0] = random.random()
     #mat.node_tree.nodes["Vector Math.001"].inputs[3].default_value[0] = random.random()
 
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 def saveMatrix(obj: bpy.types.Object, camera: bpy.types.Object) -> np.ndarray:
     #scene = bpy.context.scene
     #camera = scene.camera
@@ -129,12 +132,16 @@ class Scene:
         self.lights = getObjects("Light")
         self.cam = bpy.data.objects["Camera"]
         self.sign = bpy.data.objects["Sign"]
+<<<<<<< HEAD
         self.mat = bpy.data.materials["SignMaterial"] 
         self.textures = os.listdir("textures")
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
     def randomize(self):
         randRotation(self.sign, [(-3, 3), (-30, 30), (-3, 3)])
         randPositions(self.lights, lightRanges)
         randObjColors(self.lights)
+<<<<<<< HEAD
         setEnergy(self.lights, squareRandRange((5, 1000)))
         
         randCameraPos(self.cam)
@@ -142,6 +149,12 @@ class Scene:
         randPosInCam([self.sign], [(-1.0, 1.0), (-1.0, 1.0), (f*(-0.1), f*(-1.0))], self.cam)
         
         randBackgroundTex(self.mat, self.textures)
+=======
+        setEnergy(self.lights, randRange((50, 1000)))
+        randCameraPos(self.cam)
+        f = randFocalLength(self.cam)
+        randPosInCam([self.sign], [(-1.0, 1.0), (-1.0, 1.0), (f*(-0.1), f*(-0.5))], self.cam)
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
     def get_mat(self):
         return saveMatrix(self.sign, self.cam)
 
@@ -150,6 +163,7 @@ def genereateAllSignImages(signFolder, count, img_path, ann_path, scene: Scene):
     for i, path in enumerate(os.listdir(signFolder)):
         print(os.path.join(signFolder, path))
         setTrafficSign("//" + os.path.join(signFolder, path))
+<<<<<<< HEAD
         generateSignImages(count, img_path, ann_path, path.split("_")[0], path.split("_")[1].split(".")[0], scene)    
         print(f"Sign: {i} / {l}")
 def generateSignImages(count, img_path, ann_path, name, variant, scene: Scene):
@@ -166,6 +180,23 @@ def main():
     #generateSignImages(10, os.path.join("out", "imgs"), os.path.join("out", "info"), "test", os.path.join("//Signs", "MUTCD_R1-2.svg.png"), sign, cam, lights)
     genereateAllSignImages("Signs", 250, os.path.join("//out", "imgs"), os.path.join("out", "info"), scene)
     #scene.randomize()
+=======
+        generateSignImages(count, img_path, ann_path, path.split("_")[0], scene)    
+        print(f"Sign: {i} / {l}")
+def generateSignImages(count, img_path, ann_path, name, scene: Scene):
+    for index in range(count):
+        scene.randomize()
+        with open(os.path.join(ann_path, f"{name}_{index}.info.json"), "w+") as file:
+            file.write(json.dumps(saveMatrix(scene.sign, scene.cam)))
+        
+        renderImage(os.path.join(img_path, f"{name}_{index}.png"))
+        print(f"Image: {index} / {count}")
+def main():
+    scene = Scene()
+    #generateSignImages(10, os.path.join("out", "imgs"), os.path.join("out", "info"), "test", os.path.join("//Signs", "MUTCD_R1-2.svg.png"), sign, cam, lights)
+    #genereateAllSignImages("Signs", 250, os.path.join("//out", "imgs"), os.path.join("out", "info"), scene)
+    scene.randomize()
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
     #for path in os.listdir("Signs"):
     #    print(os.path.join("Signs", path))
     #    setTrafficSign("//" + os.path.join("Signs", path))

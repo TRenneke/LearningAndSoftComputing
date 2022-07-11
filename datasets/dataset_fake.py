@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 from datetime import MAXYEAR
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 import random 
 from torch.utils.data import Dataset
 import os
@@ -8,6 +11,7 @@ import numpy as np
 import torch as torch
 import json
 
+<<<<<<< HEAD
 def bb_union(bb1, bb2):
     minx1, miny1, maxx1, maxy1 = bb1
     minx2, miny2, maxx2, maxy2 = bb2
@@ -21,6 +25,8 @@ def bb_area(bb):
 def bb_oclusion(bb1, bb2):
     return bb_area(bb_union(bb1, bb2)) / min(bb_area(bb1), bb_area(bb2))
 
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 class fake_dataset(Dataset):
     def __init__(self, sign_path: str, background_path: str, length: int, 
                  scr: tuple[int, int], size: int, sign_sice: tuple[int, int], transforms = None):
@@ -47,8 +53,11 @@ class fake_dataset(Dataset):
     def get_rand_img(root, paths) -> np.ndarray:
         path = paths[random.randrange(0, len(paths))]
         img = cv.imread(os.path.join(root, path), cv.IMREAD_UNCHANGED)
+<<<<<<< HEAD
         if len(img.shape) == 2:
             img = cv.cvtColor(img, cv.COLOR_GRAY2RGB)
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
         if (img.shape[2] == 3):
             img = img[:,:,[2, 1, 0]]
         elif (img.shape[2] == 4):
@@ -56,7 +65,10 @@ class fake_dataset(Dataset):
         else:
             assert False
         return img, path
+<<<<<<< HEAD
 
+=======
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
     def sign_path2label(self, path:str):
         return self.name2label[path.split("_")[0]]
     def get_bb(self, path: str, id: int, img_shape):
@@ -97,14 +109,20 @@ class fake_dataset(Dataset):
         boxes = []
         labels = []
         area = []
+<<<<<<< HEAD
         x = self.size / min(img.shape[0], img.shape[1])
         img = cv.resize(img, (0, 0), fx = x, fy = x)
         ocluded_box_count = 0
+=======
+        x = self.size / max(img.shape)
+        img = cv.resize(img, (0, 0), fx = x, fy = x)
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
         for i in range(sign_count):
             sign, path = fake_dataset.get_rand_img(os.path.join(self.sign_path, "imgs"), self.signs)
             size = random.randrange(self.sign_size[0], min(img.shape[0]-5, img.shape[1]-5, self.sign_size[1]))
             scaling = size / max(sign.shape)
             sign = cv.resize(sign, dsize=(0, 0), fx=scaling, fy=scaling)
+<<<<<<< HEAD
             minx, miny, maxx, maxy = self.get_bb(path, self.sign_path2label(path), sign.shape)
             
             w = sign.shape[1]
@@ -127,12 +145,28 @@ class fake_dataset(Dataset):
             alpha = (sign[:,:,3]/255)
             
             #alpha = fake_dataset.blockout(alpha, bbox)
+=======
+            bbox = self.get_bb(path, self.sign_path2label(path), sign.shape)
+            w = sign.shape[1]
+            h = sign.shape[0]
+            #if img.shape[1] - sign.shape[1] <= 0 or img.shape[0] - sign.shape[0] <= 0:
+            #    continue
+            x = random.randrange(0, img.shape[1] - sign.shape[1])
+            y = random.randrange(0, img.shape[0] - sign.shape[0])
+            alpha = (sign[:,:,3]/255)
+            
+            alpha = fake_dataset.blockout(alpha, bbox)
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 
             #alpha *= (random.random() * 0.25 + 0.75)
             alpha = np.stack([alpha, alpha, alpha], axis=-1)
             sign = sign[:,:,0:3] * alpha
             img[y:y+h, x:x+w, :] = img[y:y+h, x:x+w, :] * (1-alpha) + sign
             
+<<<<<<< HEAD
+=======
+            minx, miny, maxx, maxy = bbox
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
             boxes.append(np.array([x+minx, y+miny, x+maxx, y+maxy]))
             labels.append(self.sign_path2label(path))
             area.append(w*h)
@@ -140,6 +174,7 @@ class fake_dataset(Dataset):
                   "labels": torch.tensor(labels, dtype=torch.int64),
                   "image_id": torch.tensor([idx], dtype=torch.int64),
                   "area": torch.tensor(area, dtype=torch.float32),
+<<<<<<< HEAD
                   "iscrowd": torch.tensor([False] * (sign_count - ocluded_box_count)),
                   }
         encode_params = [cv.IMWRITE_JPEG_QUALITY, random.randrange(5, 75)]
@@ -147,6 +182,10 @@ class fake_dataset(Dataset):
         buf = cv.imencode(".jpg", img, encode_params)
         #print(buf)
         img = cv.imdecode(buf[1], cv.IMREAD_UNCHANGED)
+=======
+                  "iscrowd": torch.tensor([False] * sign_count),
+                  }
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
         img = Image.fromarray(img)
         # = np.transpose(img, (2, 0, 1))
         #img = torch.tensor(img, dtype=torch.float32) / 255

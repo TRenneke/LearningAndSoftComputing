@@ -9,14 +9,22 @@ from detection.coco_eval import CocoEvaluator
 from detection.coco_utils import get_coco_api_from_dataset
 
 
+<<<<<<< HEAD
 def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None, eval=True):
+=======
+def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, scaler=None):
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
     model.train()
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter("lr", utils.SmoothedValue(window_size=1, fmt="{value:.6f}"))
     header = f"Epoch: [{epoch}]"
 
     lr_scheduler = None
+<<<<<<< HEAD
     if epoch == 0 and eval:
+=======
+    if epoch == 0:
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
         warmup_factor = 1.0 / 1000
         warmup_iters = min(1000, len(data_loader) - 1)
 
@@ -43,6 +51,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
             sys.exit(1)
 
         optimizer.zero_grad()
+<<<<<<< HEAD
         if eval:
             if scaler is not None:
                 scaler.scale(losses).backward()
@@ -54,6 +63,18 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq, sc
 
             if lr_scheduler is not None:
                 lr_scheduler.step()
+=======
+        if scaler is not None:
+            scaler.scale(losses).backward()
+            scaler.step(optimizer)
+            scaler.update()
+        else:
+            losses.backward()
+            optimizer.step()
+
+        if lr_scheduler is not None:
+            lr_scheduler.step()
+>>>>>>> 00884d9dc7736ceb9037c8a8ad679216526740ff
 
         metric_logger.update(loss=losses_reduced, **loss_dict_reduced)
         metric_logger.update(lr=optimizer.param_groups[0]["lr"])
