@@ -133,6 +133,7 @@ db_lisa_tiny
 backgrounds
 
 blender/out
+blender/textures
 *.blend1
 models
 
